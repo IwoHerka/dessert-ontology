@@ -78,6 +78,27 @@
                                          ] .
 
 
+:LactoseFreeDessert a owl:Class ;
+                    owl:equivalentClass [ owl:intersectionOf ( :Dessert
+                                                               [ a owl:Restriction ;
+                                                                 owl:onProperty :hasIngredient ;
+                                                                 owl:allValuesFrom :LactoseFree
+                                                               ]
+                                                             ) ;
+                                          a owl:Class
+                                        ] .
+
+
+:NonLactoseFreeDessert a owl:Class ;
+                       owl:equivalentClass [ owl:intersectionOf ( :Dessert
+                                                                  [ a owl:Class ;
+                                                                    owl:complementOf :LactoseFreeDessert
+                                                                  ]
+                                                                ) ;
+                                             a owl:Class
+                                           ] .
+
+
 :GlutenFreeDessert a owl:Class ;
                    owl:equivalentClass [ owl:intersectionOf ( :Dessert
                                                               [ a owl:Restriction ;
@@ -136,6 +157,19 @@
                                        a owl:Class
                                      ] .
 
+:ContainingLactose a owl:Class ;
+                   rdfs:subClassOf :Ingredient .
+
+
+
+:LactoseFree a owl:Class ;
+             owl:equivalentClass [ owl:intersectionOf ( :Ingredient
+                                                        [ a owl:Class ;
+                                                          owl:complementOf :ContainingLactose
+                                                        ]
+                                                      ) ;
+                                   a owl:Class
+                                 ] .
 
 
 :ContainingGluten a owl:Class ;
@@ -211,7 +245,8 @@
 
 
 :Dairy a owl:Class ;
-       rdfs:subClassOf :OfAnimalOrigin .
+       rdfs:subClassOf :OfAnimalOrigin ;
+       rdfs:subClassOf :ContainingLactose .
 
 
 :Egg a owl:Class ;
@@ -277,6 +312,19 @@
 [ a owl:AllDisjointClasses ;
   owl:members ( :ContainingGluten
                 :Dairy
+                :Egg
+                :Fruit
+                :Nut
+                :Sugar
+                :Vegetable
+              )
+] .
+
+
+[ a owl:AllDisjointClasses ;
+  owl:members ( :ContainingLactose
+                :Seed
+                :Alcohol
                 :Egg
                 :Fruit
                 :Nut
