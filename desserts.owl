@@ -1,0 +1,343 @@
+@prefix : <http://iwoherka.eu/desserts#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://iwoherka.eu/desserts> .
+
+<http://iwoherka.eu/desserts> a owl:Ontology .
+
+
+#################################################################
+#    Properties
+#################################################################
+
+
+:hasIngredient a owl:ObjectProperty ;
+               owl:inverseOf :usedToMake ;
+               a owl:InverseFunctionalProperty ;
+               rdfs:domain :Dessert ;
+               rdfs:range :Ingredient .
+
+
+:hasSubstitute a owl:ObjectProperty ,
+                 owl:SymmetricProperty ;
+               rdfs:domain :Ingredient ;
+               rdfs:range :Ingredient .
+
+
+:usedToMake a owl:ObjectProperty .
+
+
+#################################################################
+#    Base classes
+#################################################################
+
+
+:Food a owl:Class .
+
+
+:Dessert a owl:Class ;
+         rdfs:subClassOf :Food ,
+                         [ a owl:Restriction ;
+                           owl:onProperty :hasIngredient ;
+                           owl:someValuesFrom :Ingredient
+                         ] ;
+         owl:disjointWith :Ingredient .
+
+
+:NamedDessert a owl:Class ;
+              rdfs:subClassOf :Dessert .
+
+
+:Ingredient a owl:Class ;
+            rdfs:subClassOf :Food .
+
+
+#################################################################
+#    Inferenced classes
+#################################################################
+
+
+:AlcoholicDessert a owl:Class ;
+                  owl:equivalentClass [ a owl:Restriction ;
+                                        owl:onProperty :hasIngredient ;
+                                        owl:someValuesFrom :Alcohol
+                                      ] ;
+                  owl:disjointWith :NonAlcoholicDessert .
+
+
+:NonAlcoholicDessert a owl:Class ;
+                     owl:equivalentClass [ owl:intersectionOf ( :Dessert
+                                                                [ a owl:Class ;
+                                                                  owl:complementOf :AlcoholicDessert
+                                                                ]
+                                                              ) ;
+                                           a owl:Class
+                                         ] .
+
+
+:GlutenFreeDessert a owl:Class ;
+                   owl:equivalentClass [ owl:intersectionOf ( :Dessert
+                                                              [ a owl:Restriction ;
+                                                                owl:onProperty :hasIngredient ;
+                                                                owl:allValuesFrom :GlutenFree
+                                                              ]
+                                                            ) ;
+                                         a owl:Class
+                                       ] .
+
+
+:NonGlutenFreeDessert a owl:Class ;
+                      owl:equivalentClass [ owl:intersectionOf ( :Dessert
+                                                                 [ a owl:Class ;
+                                                                   owl:complementOf :GlutenFreeDessert
+                                                                 ]
+                                                               ) ;
+                                            a owl:Class
+                                          ] .
+
+
+:HasVeganEquivalent a owl:Class ;
+                    owl:equivalentClass [ owl:intersectionOf ( :Dessert
+                                                               [ a owl:Restriction ;
+                                                                 owl:onProperty :hasIngredient ;
+                                                                 owl:allValuesFrom [ a owl:Class ;
+                                                                                     owl:unionOf ( :HasPlantSubstitute
+                                                                                                   :OfPlantOrigin
+                                                                                                 )
+                                                                                   ]
+                                                               ]
+                                                             ) ;
+                                          a owl:Class
+                                        ] .
+
+
+:VeganDessert a owl:Class ;
+              owl:equivalentClass [ owl:intersectionOf ( :Dessert
+                                                         [ a owl:Class ;
+                                                           owl:complementOf [ a owl:Restriction ;
+                                                                              owl:onProperty :hasIngredient ;
+                                                                              owl:someValuesFrom :OfAnimalOrigin
+                                                                            ]
+                                                         ]
+                                                       ) ;
+                                    a owl:Class
+                                  ] .
+
+
+:NonVeganDessert a owl:Class ;
+                 owl:equivalentClass [ owl:intersectionOf ( :Dessert
+                                                            [ a owl:Class ;
+                                                              owl:complementOf :VeganDessert
+                                                            ]
+                                                          ) ;
+                                       a owl:Class
+                                     ] .
+
+
+
+:ContainingGluten a owl:Class ;
+                  rdfs:subClassOf :Ingredient .
+
+
+:GlutenFree a owl:Class ;
+            owl:equivalentClass [ owl:intersectionOf ( :Ingredient
+                                                       [ a owl:Class ;
+                                                         owl:complementOf :ContainingGluten
+                                                       ]
+                                                     ) ;
+                                  a owl:Class
+                                ] .
+
+
+:HasSubstitute a owl:Class ;
+               owl:equivalentClass [ a owl:Restriction ;
+                                     owl:onProperty :hasSubstitute ;
+                                     owl:minCardinality "1"^^xsd:nonNegativeInteger
+                                   ] .
+
+
+:HasPlantSubstitute a owl:Class ;
+                    owl:equivalentClass [ a owl:Restriction ;
+                                          owl:onProperty :hasSubstitute ;
+                                          owl:someValuesFrom :OfPlantOrigin
+                                        ] ;
+                    rdfs:subClassOf :HasSubstitute .
+
+
+#################################################################
+#    Food groups
+#################################################################
+
+
+:Seed a owl:Class ;
+      rdfs:subClassOf :OfPlantOrigin .
+
+
+:Sugar a owl:Class ;
+       rdfs:subClassOf :OfPlantOrigin .
+
+
+:Vegetable a owl:Class ;
+           rdfs:subClassOf :OfPlantOrigin .
+
+
+:Wheat a owl:Class ;
+       rdfs:subClassOf :ContainingGluten ,
+                       :Grain .
+
+
+:Nut a owl:Class ;
+     rdfs:subClassOf :OfPlantOrigin .
+
+
+:OfAnimalOrigin a owl:Class ;
+                rdfs:subClassOf :Ingredient ;
+                owl:disjointWith :OfPlantOrigin .
+
+
+:OfPlantOrigin a owl:Class ;
+               rdfs:subClassOf :Ingredient .
+
+
+:Alcohol a owl:Class ;
+         rdfs:subClassOf :OfPlantOrigin ;
+         owl:disjointWith :Almond ,
+                          :RealMilk ,
+                          :SoyMilk ,
+                          :Sugar .
+
+
+:Dairy a owl:Class ;
+       rdfs:subClassOf :OfAnimalOrigin .
+
+
+:Egg a owl:Class ;
+     rdfs:subClassOf :OfAnimalOrigin .
+
+
+:Fruit a owl:Class ;
+       rdfs:subClassOf :OfPlantOrigin .
+
+
+:Grain a owl:Class ;
+       rdfs:subClassOf :Seed .
+
+
+#################################################################
+#    Ingredients
+#################################################################
+
+
+:SliceOfBread a owl:Class ;
+              rdfs:subClassOf :Wheat .
+
+
+:SoyMilk a owl:Class ;
+         rdfs:subClassOf :Vegetable .
+
+
+:RealMilk a owl:Class ;
+          rdfs:subClassOf :Dairy ,
+                          [ a owl:Restriction ;
+                            owl:onProperty :hasSubstitute ;
+                            owl:someValuesFrom :SoyMilk
+                          ] .
+
+
+:MarsalaWine a owl:Class ;
+             rdfs:subClassOf :Alcohol ,
+                             :OfPlantOrigin .
+
+
+:Almond a owl:Class ;
+        rdfs:subClassOf :Nut .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+
+[ a owl:AllDisjointClasses ;
+  owl:members ( :Alcohol
+                :Dairy
+                :Egg
+                :Fruit
+                :Nut
+                :Seed
+                :Sugar
+                :Vegetable
+              )
+] .
+
+
+[ a owl:AllDisjointClasses ;
+  owl:members ( :ContainingGluten
+                :Dairy
+                :Egg
+                :Fruit
+                :Nut
+                :Sugar
+                :Vegetable
+              )
+] .
+
+
+#################################################################
+#    Desserts
+#################################################################
+
+
+:Tiramisu a owl:Class ;
+          rdfs:subClassOf :NamedDessert ,
+                          [ a owl:Restriction ;
+                            owl:onProperty :hasIngredient ;
+                            owl:someValuesFrom :MarsalaWine
+                          ] ,
+                          [ a owl:Restriction ;
+                            owl:onProperty :hasIngredient ;
+                            owl:allValuesFrom [ a owl:Class ;
+                                                owl:unionOf ( :MarsalaWine
+                                                            )
+                                              ]
+                          ] .
+
+
+:AlmondTart a owl:Class ;
+            rdfs:subClassOf :NamedDessert ,
+                            [ a owl:Restriction ;
+                              owl:onProperty :hasIngredient ;
+                              owl:someValuesFrom :Almond
+                            ] ,
+                            [ a owl:Restriction ;
+                              owl:onProperty :hasIngredient ;
+                              owl:someValuesFrom :Sugar
+                            ] ,
+                            [ a owl:Restriction ;
+                              owl:onProperty :hasIngredient ;
+                              owl:allValuesFrom [ a owl:Class ;
+                                                  owl:unionOf ( :Almond
+                                                                :Sugar
+                                                              )
+                                                ]
+                            ] .
+
+
+:BreadAndButterPudding a owl:Class ;
+                       rdfs:subClassOf :NamedDessert ,
+                                       [ a owl:Restriction ;
+                                         owl:onProperty :hasIngredient ;
+                                         owl:someValuesFrom :SliceOfBread
+                                       ] ,
+                                       [ a owl:Restriction ;
+                                         owl:onProperty :hasIngredient ;
+                                         owl:allValuesFrom [ a owl:Class ;
+                                                             owl:unionOf ( :SliceOfBread
+                                                                         )
+                                                           ]
+                                       ] .
+
+
