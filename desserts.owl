@@ -21,7 +21,9 @@
 
 
 :hasSubstitute a owl:ObjectProperty ,
-                 owl:SymmetricProperty ;
+                 owl:SymmetricProperty ,
+                 owl:TransitiveProperty ;
+               owl:inverseOf :hasSubstitute ;
                rdfs:domain :Food ;
                rdfs:range :Food .
 
@@ -64,13 +66,11 @@
                                    ] .
 
 
-:NonAlcoholicFood a owl:Class ;
-                     owl:equivalentClass [ owl:intersectionOf ( :Food
+:NonAlcoholicFood owl:equivalentClass [ owl:intersectionOf ( :Food
                                                                 [ a owl:Class ;
                                                                   owl:complementOf :AlcoholicFood
                                                                 ]
-                                                              ) ;
-                                           a owl:Class
+                                                              )
                                          ] .
 
 
@@ -175,9 +175,6 @@
 :Sugar rdfs:subClassOf :VeganFood , :NonAlcoholicFood, :GlutenFreeFood, :LactoseFreeFood .
 
 
-:Vegetable rdfs:subClassOf :VeganFood , :NonAlcoholicFood, :GlutenFreeFood, :LactoseFreeFood .
-
-
 :Grain rdfs:subClassOf :Seed .
 
 
@@ -199,7 +196,16 @@
 :Fruit rdfs:subClassOf :VeganFood , :NonAlcoholicFood, :GlutenFreeFood, :LactoseFreeFood .
 
 
+:Bean rdfs:subClassOf :VeganFood , :NonAlcoholicFood, :GlutenFreeFood, :LactoseFreeFood .
+
+
 :Rice rdfs:subClassOf :Seed , :GlutenFreeFood .
+
+
+:PlantOil rdfs:subClassOf :Seed , :GlutenFreeFood .
+
+
+:Soy rdfs:subClassOf :Bean .
 
 
 :Wine rdfs:subClassOf :Alcohol , :GlutenFreeFood .
@@ -212,50 +218,144 @@
 
 :Almond rdfs:subClassOf :Nut .
 
-:ChickenEgg rdfs:subClassOf :Egg .
+:CowMilk rdfs:subClassOf
+    :Dairy ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasSubstitute ;
+      owl:someValuesFrom [ owl:unionOf ( :SoyMilk :RiceMilk ) ]
+    ] .
 
-:CowMilk rdfs:subClassOf :Dairy ,
-                         [ a owl:Restriction ;
-                           owl:onProperty :hasSubstitute ;
-                           owl:someValuesFrom :SoyMilk
-                         ] .
-
-:WheatFlour rdfs:subClassOf :Wheat ,
-                            [ a owl:Restriction ;
-                              owl:onProperty :hasSubstitute ;
-                              owl:someValuesFrom :RiceFlour
-                            ] .
+:Flour rdfs:subClassOf :Wheat ,
+                        [ a owl:Restriction ;
+                          owl:onProperty :hasSubstitute ;
+                          owl:someValuesFrom [ owl:unionOf ( :RiceFlour :BananaFlour ) ]
+                        ] .
 
 :RiceFlour rdfs:subClassOf :Rice .
 
+:RiceMilk rdfs:subClassOf :Rice .
+
+:BananaFlour rdfs:subClassOf :Banana .
+
 :EggWhite rdfs:subClassOf :Egg .
 
+:SliceOfBread rdfs:subClassOf :Flour .
 
-:SliceOfBread rdfs:subClassOf :Wheat .
+:SoyMilk rdfs:subClassOf :Soy .
 
-:SoyMilk rdfs:subClassOf :Vegetable .
+:Apple rdfs:subClassOf :Fruit .
 
-:MarsalaWine rdfs:subClassOf :Wine .
+:Butter rdfs:subClassOf :CowMilk .
+                        [ a owl:Restriction ;
+                          owl:onProperty :hasSubstitute ;
+                          owl:someValuesFrom :Margarine
+                        ] .
+
+:Margarine rdfs:subClassOf :PlantOil .
+
+:Crumb rdfs:subClassOf :Flour .
+
+:Banana rdfs:subClassOf :Fruit .
+
+:BiscuitCrumb rdfs:subClassOf :Flour .
+
+
+:Cream rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Egg
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :CowMilk
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Egg :CowMilk ) ]
+    ] .
+
+
+:Toffee rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Sugar
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Butter
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Nut
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Sugar :Butter :Nut ) ]
+    ] .
+
+
+:Jam rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Fruit
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Sugar
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Fruit :Sugar ) ]
+    ] .
+
+
+:Marzipan rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Almond
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Sugar
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Almond :Sugar ) ]
+    ] .
+
+
+:VanillaEssence rdfs:subClassOf :PlantOil .
+
+:SesameSeed rdfs:subClassOf :Seed, :GlutenFreeFood .
+
+:OrangeZest rdfs:subClassOf :Fruit .
+
+:HeavyCream rdfs:subClassOf :Cream .
+
+:Cocoa rdfs:subClassOf :Bean .
+
+:CocoaPowder rdfs:subClassOf :Cocoa .
+
+:Chocolate rdfs:subClassOf :CocoaPowder .
+
+:ChocolateChip rdfs:subClassOf :Chocolate .
+
+:Rum rdfs:subClassOf :Alcohol, :GlutenFreeFood .
+
+:Cherry rdfs:subClassOf :Fruit .
+
+:CocoaPowder rdfs:subClassOf :Cocoa .
+
+:WhippedCream rdfs:subClassOf :Cream .
+
+:ChocolateCurl rdfs:subClassOf :Chocolate .
+
+:Kirsch rdfs:subClassOf :Alcohol , :GlutenFreeFood .
 
 
 #################################################################
 #    Desserts
 #################################################################
-
-
-:Tiramisu a owl:Class ;
-          rdfs:subClassOf :NamedDessert ,
-                          [ a owl:Restriction ;
-                            owl:onProperty :hasIngredient ;
-                            owl:someValuesFrom :MarsalaWine
-                          ] ,
-                          [ a owl:Restriction ;
-                            owl:onProperty :hasIngredient ;
-                            owl:allValuesFrom [ a owl:Class ;
-                                                owl:unionOf ( :MarsalaWine
-                                                            )
-                                              ]
-                          ] .
 
 
 :AlmondTart a owl:Class ;
@@ -266,43 +366,37 @@
                             ] ,
                             [ a owl:Restriction ;
                               owl:onProperty :hasIngredient ;
+                              owl:someValuesFrom :Egg
+                            ] ,
+                            [ a owl:Restriction ;
+                              owl:onProperty :hasIngredient ;
+                              owl:someValuesFrom :CowMilk
+                            ] ,
+                            [ a owl:Restriction ;
+                              owl:onProperty :hasIngredient ;
                               owl:someValuesFrom :Sugar
+                            ] ,
+                            [ a owl:Restriction ;
+                              owl:onProperty :hasIngredient ;
+                              owl:someValuesFrom :Flour
                             ] ,
                             [ a owl:Restriction ;
                               owl:onProperty :hasIngredient ;
                               owl:allValuesFrom [ a owl:Class ;
                                                   owl:unionOf ( :Almond
+                                                                :Egg
+                                                                :CowMilk
                                                                 :Sugar
+                                                                :Flour
                                                               )
                                                 ]
                             ] .
 
 
-:BreadAndButterPudding a owl:Class ;
-                       rdfs:subClassOf :NamedDessert ,
-                                       [ a owl:Restriction ;
-                                         owl:onProperty :hasIngredient ;
-                                         owl:someValuesFrom :SliceOfBread
-                                       ] ,
-                                       [ a owl:Restriction ;
-                                         owl:onProperty :hasIngredient ;
-                                         owl:someValuesFrom :Sponge
-                                       ] ,
-                                       [ a owl:Restriction ;
-                                         owl:onProperty :hasIngredient ;
-                                         owl:allValuesFrom [ a owl:Class ;
-                                                             owl:unionOf ( :SliceOfBread
-                                                                           :Sponge
-                                                                         )
-                                                           ]
-                                       ] .
-
-
-:Sponge a owl:Class ;
-        rdfs:subClassOf :NamedDessert ,
+:Sponge rdfs:subClassOf :NamedDessert ,
                         [ a owl:Restriction ;
                           owl:onProperty :hasIngredient ;
-                          owl:someValuesFrom :WheatFlour
+                          owl:someValuesFrom :Flour
                         ] ,
                         [ a owl:Restriction ;
                           owl:onProperty :hasIngredient ;
@@ -310,10 +404,328 @@
                         ] ,
                         [ a owl:Restriction ;
                           owl:onProperty :hasIngredient ;
+                          owl:someValuesFrom :Egg
+                        ] ,
+                        [ a owl:Restriction ;
+                          owl:onProperty :hasIngredient ;
                           owl:allValuesFrom [ a owl:Class ;
                                               owl:unionOf (
-                                                            :WheatFlour
+                                                            :Egg
+                                                            :Flour
                                                             :CowMilk
                                                           )
                                             ]
                         ] .
+
+
+:AngelFoodCake rdfs:subClassOf :NamedDessert ,
+                               [ a owl:Restriction ;
+                                 owl:onProperty :hasIngredient ;
+                                 owl:someValuesFrom :EggWhite
+                               ] ,
+                               [ a owl:Restriction ;
+                                 owl:onProperty :hasIngredient ;
+                                 owl:someValuesFrom :Sponge
+                               ] ,
+                               [ a owl:Restriction ;
+                                 owl:onProperty :hasIngredient ;
+                                 owl:someValuesFrom :Sugar
+                               ] ,
+                               [ a owl:Restriction ;
+                                 owl:onProperty :hasIngredient ;
+                                 owl:allValuesFrom [ a owl:Class ;
+                                                     owl:unionOf (
+                                                                   :EggWhite
+                                                                   :Sponge
+                                                                   :Sugar
+                                                                 )
+                                                   ]
+                                ] .
+
+
+:AppleBrownBetty rdfs:subClassOf :NamedDessert ,
+                                 [ a owl:Restriction ;
+                                   owl:onProperty :hasIngredient ;
+                                   owl:someValuesFrom :Apple
+                                 ] ,
+                                 [ a owl:Restriction ;
+                                   owl:onProperty :hasIngredient ;
+                                   owl:someValuesFrom :Crumb
+                                 ] ,
+                                 [ a owl:Restriction ;
+                                   owl:onProperty :hasIngredient ;
+                                   owl:someValuesFrom :Butter
+                                 ] ,
+                                 [ a owl:Restriction ;
+                                   owl:onProperty :hasIngredient ;
+                                   owl:someValuesFrom :SliceOfBread
+                                 ] ,
+                                 [ a owl:Restriction ;
+                                   owl:onProperty :hasIngredient ;
+                                   owl:allValuesFrom [ a owl:Class ;
+                                                       owl:unionOf (
+                                                                     :Apple
+                                                                     :Crumb
+                                                                     :Butter
+                                                                     :SliceOfBread
+                                                                   )
+                                                     ]
+                                 ] .
+
+
+:AppleCharlotte rdfs:subClassOf :NamedDessert ,
+                                [ a owl:Restriction ;
+                                  owl:onProperty :hasIngredient ;
+                                  owl:someValuesFrom :Apple
+                                ] ,
+                                [ a owl:Restriction ;
+                                  owl:onProperty :hasIngredient ;
+                                  owl:someValuesFrom :Sugar
+                                ] ,
+                                [ a owl:Restriction ;
+                                  owl:onProperty :hasIngredient ;
+                                  owl:someValuesFrom :SliceOfBread
+                                ] ,
+                                [ a owl:Restriction ;
+                                  owl:onProperty :hasIngredient ;
+                                  owl:someValuesFrom :Butter
+                                ] ,
+                                [ a owl:Restriction ;
+                                  owl:onProperty :hasIngredient ;
+                                  owl:allValuesFrom [ a owl:Class ;
+                                                      owl:unionOf (
+                                                                    :Apple
+                                                                    :Sugar
+                                                                    :SliceOfBread
+                                                                    :Butter
+                                                                  )
+                                                    ]
+                                 ] .
+
+
+:AppleCrumble rdfs:subClassOf :NamedDessert ,
+                                [ a owl:Restriction ;
+                                 owl:onProperty :hasIngredient ;
+                                 owl:someValuesFrom :Apple
+                                ] ,
+                                [ a owl:Restriction ;
+                                 owl:onProperty :hasIngredient ;
+                                 owl:someValuesFrom :Flour
+                                ] ,
+                                [ a owl:Restriction ;
+                                 owl:onProperty :hasIngredient ;
+                                 owl:someValuesFrom :Sugar
+                                ] ,
+                                [ a owl:Restriction ;
+                                 owl:onProperty :hasIngredient ;
+                                 owl:someValuesFrom :Butter
+                                ] ,
+                                [ a owl:Restriction ;
+                                 owl:onProperty :hasIngredient ;
+                                 owl:allValuesFrom [ a owl:Class ;
+                                                     owl:unionOf (
+                                                                   :Apple
+                                                                   :Flour
+                                                                   :Sugar
+                                                                   :Butter
+                                                                 )
+                                                   ]
+                                ] .
+
+
+:BananaMuffins rdfs:subClassOf :NamedDessert ,
+                               [ a owl:Restriction ;
+                                 owl:onProperty :hasIngredient ;
+                                 owl:someValuesFrom :Banana
+                               ] ,
+                               [ a owl:Restriction ;
+                                 owl:onProperty :hasIngredient ;
+                                 owl:someValuesFrom :Flour
+                               ] ,
+                               [ a owl:Restriction ;
+                                 owl:onProperty :hasIngredient ;
+                                 owl:someValuesFrom :Egg
+                               ] ,
+                               [ a owl:Restriction ;
+                                 owl:onProperty :hasIngredient ;
+                                 owl:someValuesFrom :Sugar
+                               ] ,
+                               [ a owl:Restriction ;
+                                 owl:onProperty :hasIngredient ;
+                                 owl:someValuesFrom :CowMilk
+                               ] ,
+                               [ a owl:Restriction ;
+                                 owl:onProperty :hasIngredient ;
+                                 owl:allValuesFrom [ a owl:Class ;
+                                                     owl:unionOf (
+                                                                   :Banana
+                                                                   :Flour
+                                                                   :Egg
+                                                                   :CowMilk
+                                                                   :Sugar
+                                                                 )
+                                                   ]
+                               ] .
+
+
+:BanoffePie rdfs:subClassOf
+    :NamedDessert ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Banana
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Cream
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Toffee
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :BiscuitCrumb
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ a owl:Class ;
+                          owl:unionOf (
+                                        :Banana
+                                        :Cream
+                                        :Toffee
+                                        :BiscuitCrumb
+                                      )
+                        ]
+    ] .
+
+
+:BattenbergCake rdfs:subClassOf
+    :NamedDessert ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Sponge
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Jam
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Marzipan
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Sponge :Jam :Marzipan ) ]
+    ] .
+
+
+:BelgianWaffles rdfs:subClassOf
+    :NamedDessert ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Egg
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :CowMilk
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Flour
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Sugar
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :VanillaEssence
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Egg :CowMilk :Flour :Sugar :VanillaEssence ) ]
+    ] .
+
+
+:BiscottiRegina rdfs:subClassOf
+    :NamedDessert ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :SesameSeed
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :OrangeZest
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Flour
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Egg
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :CowMilk
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :SesameSeed :OrangeZest :Flour :Egg :CowMilk ) ]
+    ] .
+
+
+:BiscuitTortoni rdfs:subClassOf
+    :NamedDessert ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :HeavyCream
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Almond
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :ChocolateChip
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Rum
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :HeavyCream :Almond :ChocolateChip :Rum ) ]
+    ] .
+
+
+:BlackForestGateau rdfs:subClassOf
+    :NamedDessert ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Cherry
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :CocoaPowder
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Egg
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :WhippedCream
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Kirsch
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :ChocolateCurl
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Cherry :CocoaPowder :Egg :WhippedCream :Kirsch :ChocolateCurl ) ]
+    ] .
