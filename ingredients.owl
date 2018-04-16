@@ -1,0 +1,472 @@
+:Almond rdfs:subClassOf :Nut .
+
+
+:AlmondEssence rdfs:subClassOf :Almond .
+
+
+:AlmondPaste rdfs:subClassOf :Almond .
+
+
+:Apple rdfs:subClassOf :Fruit .
+
+
+:ApricotJam rdfs:subClassOf :Jam .
+
+
+:BakersYeast rdfs:subClassOf :Yeast .
+
+
+:Banana rdfs:subClassOf :Fruit .
+
+
+:BananaFlour rdfs:subClassOf :Banana .
+
+
+:BiscuitCrumb rdfs:subClassOf :Flour .
+
+
+:Blueberry rdfs:subClassOf :Fruit .
+
+
+:Brandy rdfs:subClassOf :Alcohol , :GlutenFree .
+
+
+:BeetrootJuice rdfs:subClassOf :Vegetable .
+
+
+:Bread rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Flour
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Yeast
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Flour :Yeast ) ]
+    ] .
+
+
+:BreadCrumb rdfs:subClassOf :Bread .
+
+
+:BreadSlice rdfs:subClassOf :Bread .
+
+
+:BrownSugar rdfs:subClassOf :Sugar .
+
+
+:Butter rdfs:subClassOf
+    :CowMilk ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasSubstitute ;
+      owl:someValuesFrom :Margarine
+    ] .
+
+
+:ButterCream rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Butter
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Sugar
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Butter :Sugar ) ]
+    ] .
+
+
+:ButterMilk rdfs:subClassOf :CowMilk .
+
+
+:Button rdfs:subClassOf :Sugar .
+
+
+:CarawaySeed rdfs:subClassOf :Seed , :GlutenFree .
+
+
+:Cranberry rdfs:subClassOf :Fruit .
+
+
+:Cherry rdfs:subClassOf :Fruit .
+
+
+:CherryLiqueur rdfs:subClassOf :Alcohol, :GlutenFree .
+
+
+:Chocolate rdfs:subClassOf :CocoaPowder .
+
+
+:ChocolateButton rdfs:subClassOf :Chocolate .
+
+
+:ChocolateChip rdfs:subClassOf :Chocolate .
+
+
+:ChocolateCurl rdfs:subClassOf :Chocolate .
+
+
+:ChocolateCookieCrumb rdfs:subClassOf :Chocolate .
+
+
+:Carrot rdfs:subClassOf :Vegetable .
+
+
+:ChoppedPecans rdfs:subClassOf :Nut .
+
+
+:ChoppedWalnut rdfs:subClassOf :Nut .
+
+
+:ChouxPastry rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Egg
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Butter
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Flour
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Water
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Water :Egg :Butter :Flour ) ]
+    ] .
+
+
+:Citrus rdfs:subClassOf :Fruit .
+
+
+:CitrusOil rdfs:subClassOf :Citrus .
+
+
+:Coconut rdfs:subClassOf :Fruit , :Nut , :Seed .
+
+
+:CoconutMilk rdfs:subClassOf :Coconut .
+
+
+:Coffee rdfs:subClassOf :Fruit .
+
+
+:CoffeePowder rdfs:subClassOf :Coffee .
+
+
+:CowMilk rdfs:subClassOf
+    :Dairy ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasSubstitute ;
+      owl:someValuesFrom [ owl:unionOf ( :SoyMilk :RiceMilk ) ]
+    ] .
+
+
+:CondensedCowMilk rdfs:subClassOf :CowMilk .
+
+
+:CoolWhip rdfs:subClassOf :WhippedCream .
+
+
+:Corn rdfs:subClassOf :Grain , :GlutenFree .
+
+
+:CornFlakes rdfs:subClassOf :Corn .
+
+
+:CornStarch rdfs:subClassOf :Corn .
+
+
+:CornFlour rdfs:subClassOf :Corn .
+
+
+:Crumb rdfs:subClassOf :Flour .
+
+
+:Cocoa rdfs:subClassOf :Bean .
+
+
+:CocoaPowder rdfs:subClassOf :Cocoa .
+
+
+:CocoaPowder rdfs:subClassOf :Cocoa .
+
+
+:Cream rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Egg
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :CowMilk
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Egg :CowMilk ) ]
+    ] .
+
+
+:CreamCheese rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :CowMilk
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Cheese
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :CowMilk :Cheese ) ]
+    ] .
+
+
+:Cinnamon rdfs:subClassOf :Spice .
+
+
+:Pineapple rdfs:subClassOf :Fruit .
+
+
+:PineappleRing rdfs:subClassOf :Pineapple .
+
+
+:CrushedPineapple rdfs:subClassOf :Pineapple .
+
+
+:Cheese rdfs:subClassOf :CowMilk .
+
+
+:ChoppedPecan rdfs:subClassOf :Pecan .
+
+
+:Currant rdfs:subClassOf :Fruit .
+
+
+:DarkChocolate rdfs:subClassOf :CocoaPowder .
+
+
+:DriedCherry rdfs:subClassOf :Cherry .
+
+
+:DriedCranberry rdfs:subClassOf :Cranberry .
+
+
+:EggYolk rdfs:subClassOf :Egg .
+
+
+:EggWhite rdfs:subClassOf :Egg .
+
+
+:Flour rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasSubstitute ;
+      owl:someValuesFrom [ owl:unionOf ( :CornFlour :RiceFlour :BananaFlour ) ]
+    ] ,
+    :Wheat .
+
+
+:FreshMint rdfs:subClassOf :Herb .
+
+
+:GoldenSyrup rdfs:subClassOf :Sugar .
+
+
+:GroundAlmond rdfs:subClassOf :Almond .
+
+
+:GroundClove rdfs:subClassOf :Spice .
+
+
+:GroundGinger rdfs:subClassOf :Spice .
+
+
+:GroundHazelnut rdfs:subClassOf :Hazelnut .
+
+
+:Hazelnut rdfs:subClassOf :Nut .
+
+
+:HeavyCream rdfs:subClassOf :Cream .
+
+
+:HotCowMilk rdfs:subClassOf :CowMilk .
+
+
+:HotTea rdfs:subClassOf :Herb .
+
+
+:IceCream rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :CowMilk
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Sugar
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :CowMilk :Sugar ) ]
+    ] .
+
+
+:IcingSugar rdfs:subClassOf :Sugar .
+
+
+:Jam rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Fruit
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Sugar
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Fruit :Sugar ) ]
+    ] .
+
+
+:Kirsch rdfs:subClassOf :Alcohol , :GlutenFree .
+
+
+:Lemon rdfs:subClassOf :Citrus .
+
+
+:LemonZest rdfs:subClassOf :Lemon .
+
+
+:LemonJuice rdfs:subClassOf :Lemon .
+
+
+:Margarine rdfs:subClassOf :Plant , :GlutenFree .
+
+
+:Marzipan rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Almond
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Sugar
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Almond :Sugar ) ]
+    ] .
+
+
+:Orange rdfs:subClassOf :Fruit .
+
+
+:OrangeZest rdfs:subClassOf :Orange .
+
+
+:OrangeJuice rdfs:subClassOf :Orange .
+
+
+:Pumpkin rdfs:subClassOf :Fruit .
+
+
+:Pear rdfs:subClassOf :Fruit .
+
+
+:Peanut rdfs:subClassOf :Nut .
+
+
+:PeanutButter rdfs:subClassOf :Peanut .
+
+
+:Pecan rdfs:subClassOf :Nut .
+
+
+:Peach rdfs:subClassOf :Fruit .
+
+
+:RiceFlour rdfs:subClassOf :Rice .
+
+
+:Raisin rdfs:subClassOf :Fruit .
+
+
+:Raspberry rdfs:subClassOf :Fruit .
+
+
+:RiceMilk rdfs:subClassOf :Rice .
+
+
+:RicottaCheese rdfs:subClassOf :Cheese .
+
+
+:Rum rdfs:subClassOf :Alcohol, :GlutenFree .
+
+
+:SliceOfBread rdfs:subClassOf :Flour .
+
+
+:SoyMilk rdfs:subClassOf :Soy .
+
+
+:SesameSeed rdfs:subClassOf :Seed, :GlutenFree .
+
+
+:Strawberry rdfs:subClassOf :Seed, :Fruit .
+
+
+:ShreddedCoconut rdfs:subClassOf :Coconut .
+
+
+:ShreddedCarrot rdfs:subClassOf :Carrot .
+
+
+:Toffee rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Sugar
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Butter
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Nut
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Sugar :Butter :Nut ) ]
+    ] .
+
+
+:ToastedNut rdfs:subClassOf :Nut .
+
+
+:WhippedCream rdfs:subClassOf :Cream .
+
+
+:WhiteSugar rdfs:subClassOf :Sugar .
+
+
+:WalnutHalf rdfs:subClassOf :Walnut .
+
+
+:Walnut rdfs:subClassOf :Nut .
+
+
+:VanillaEssence rdfs:subClassOf :Fruit .
+
+
+:VegetableOil rdfs:subClassOf :Vegetable .
