@@ -342,7 +342,7 @@
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
-      owl:someValuesFrom :ButterCowMilk
+      owl:someValuesFrom :ButterMilk
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
@@ -358,7 +358,7 @@
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
-      owl:allValuesFrom [ owl:unionOf ( :HeavyCream :ButterCowMilk :Flour :Button :Sugar ) ]
+      owl:allValuesFrom [ owl:unionOf ( :HeavyCream :ButterMilk :Flour :Button :Sugar ) ]
     ] .
 
 
@@ -1742,11 +1742,11 @@
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
-      owl:someValuesFrom :ButterCowMilk
+      owl:someValuesFrom :ButterMilk
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
-      owl:allValuesFrom [ owl:unionOf ( :Butter :Sugar :Chocolate :EggYolk :EggWhite :ShreddedCoconut :ChoppedPecan :ButterCowMilk ) ]
+      owl:allValuesFrom [ owl:unionOf ( :Butter :Sugar :Chocolate :EggYolk :EggWhite :ShreddedCoconut :ChoppedPecan :ButterMilk ) ]
     ] .
 
 
@@ -2174,7 +2174,7 @@
     :NamedDessert ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
-      owl:someValuesFrom :ButterCowMilk
+      owl:someValuesFrom :ButterMilk
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
@@ -2206,7 +2206,7 @@
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
-      owl:allValuesFrom [ owl:unionOf ( :ButterCowMilk :Pecan :Jam :Raisin :Egg :Butter :Cinnamon :GroundClove ) ]
+      owl:allValuesFrom [ owl:unionOf ( :ButterMilk :Pecan :Jam :Raisin :Egg :Butter :Cinnamon :GroundClove ) ]
     ] .
 
 
@@ -2830,11 +2830,11 @@
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
-      owl:someValuesFrom :PandanLeaves
+      owl:someValuesFrom :PandanLeaf
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
-      owl:allValuesFrom [ owl:unionOf ( :EggYolk :CoconutMilk :Sugar :EggWhite :PandanLeaves ) ]
+      owl:allValuesFrom [ owl:unionOf ( :EggYolk :CoconutMilk :Sugar :EggWhite :PandanLeaf ) ]
     ] .
 
 
@@ -3262,7 +3262,7 @@
     :NamedDessert ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
-      owl:someValuesFrom :RiceKrispies
+      owl:someValuesFrom :RiceKrispy
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
@@ -3270,7 +3270,7 @@
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
-      owl:allValuesFrom [ owl:unionOf ( :RiceKrispies :Chocolate ) ]
+      owl:allValuesFrom [ owl:unionOf ( :RiceKrispy :Chocolate ) ]
     ] .
 
 
@@ -3342,7 +3342,7 @@
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
-      owl:someValuesFrom :MiniMarshmallows
+      owl:someValuesFrom :MiniMarshmallow
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
@@ -3350,7 +3350,7 @@
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
-      owl:allValuesFrom [ owl:unionOf ( :Chocolate :GoldenSyrup :CocoaPowder :MiniMarshmallows :BiscuitCrumb ) ]
+      owl:allValuesFrom [ owl:unionOf ( :Chocolate :GoldenSyrup :CocoaPowder :MiniMarshmallow :BiscuitCrumb ) ]
     ] .
 
 
@@ -3974,11 +3974,11 @@
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
-      owl:someValuesFrom :SpongeFingers
+      owl:someValuesFrom :SpongeFinger
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
-      owl:allValuesFrom [ owl:unionOf ( :MarsalaWine :MascarponeCheese :DarkChocolate :CocoaPowder :CoffeePowder :SpongeFingers ) ]
+      owl:allValuesFrom [ owl:unionOf ( :MarsalaWine :MascarponeCheese :DarkChocolate :CocoaPowder :CoffeePowder :SpongeFinger ) ]
     ] .
 
 
@@ -4250,7 +4250,7 @@
     :NamedDessert ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
-      owl:someValuesFrom :WalnutHalve
+      owl:someValuesFrom :WalnutHalf
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
@@ -4282,7 +4282,7 @@
     ] ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
-      owl:allValuesFrom [ owl:unionOf ( :WalnutHalve :Egg :Butter :Flour :Sugar :ChoppedWalnut :VanillaEssence :IcingSugar ) ]
+      owl:allValuesFrom [ owl:unionOf ( :WalnutHalf :Egg :Butter :Flour :Sugar :ChoppedWalnut :VanillaEssence :IcingSugar ) ]
     ] .
 
 

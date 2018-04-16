@@ -232,7 +232,7 @@
 :CitrusOil rdfs:subClassOf :Citrus .
 
 
-:Coconut rdfs:subClassOf :Fruit , :Nut , :Seed .
+:Coconut rdfs:subClassOf :Nut .
 
 
 :CoconutMilk rdfs:subClassOf :Coconut .
@@ -358,6 +358,49 @@
 :PandanLeaf rdfs:subClassOf :Plant , :GlutenFree .
 
 
+:Sponge rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Flour
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Egg
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Sugar
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Egg :Sugar :Flour ) ]
+    ] .
+
+
+:SpongeFinger rdfs:subClassOf :Sponge .
+
+
+:StarchSyrup rdfs:subClassOf :Corn .
+
+
+:Sultana rdfs:subClassOf :Fruit .
+
+
+:Meringue rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :EggWhite
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Sugar
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :EggWhite :Sugar ) ]
+    ] .
+
+
 :CreamCheese rdfs:subClassOf
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
@@ -376,7 +419,7 @@
 :Cinnamon rdfs:subClassOf :Spice .
 
 
-:Gelatin rdfs:subClassOf :Collagen ;
+:Gelatin rdfs:subClassOf :Collagen ,
     [ a owl:Restriction ;
       owl:onProperty :hasSubstitute ;
       owl:someValuesFrom [ owl:unionOf ( :Agar ) ]
@@ -408,6 +451,9 @@
 
 
 :Cheese rdfs:subClassOf :CowMilk .
+
+
+:MascarponeCheese rdfs:subClassOf :Cheese .
 
 
 :ChoppedPecan rdfs:subClassOf :Pecan .
@@ -472,8 +518,7 @@
 :HotTea rdfs:subClassOf :Herb .
 
 
-:IceCream rdfs:subClassOf
-    [ a owl:Restriction ;
+:IceCream rdfs:subClassOf [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :CowMilk
     ] ,
@@ -485,6 +530,24 @@
       owl:onProperty :hasIngredient ;
       owl:allValuesFrom [ owl:unionOf ( :CowMilk :Sugar ) ]
     ] .
+
+
+:VanillaIceCream rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :IceCream
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :VanillaEssence
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :IceCream :VanillaEssence ) ]
+    ] .
+
+
+:Wafer rdfs:subClassOf :Flour .
 
 
 :IcingSugar rdfs:subClassOf :Sugar .
