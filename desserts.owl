@@ -14,15 +14,17 @@
 #################################################################
 
 
-:hasIngredient a owl:ObjectProperty .
+:hasIngredient a owl:ObjectProperty ;
+    rdfs:domain :Food ;
+    rdfs:range :Food .
 
 
 :hasSubstitute a owl:ObjectProperty ,
-                 owl:SymmetricProperty ,
-                 owl:TransitiveProperty ;
-               owl:inverseOf :hasSubstitute ;
-               rdfs:domain :Edible ;
-               rdfs:range :Edible .
+    owl:SymmetricProperty ,
+    owl:TransitiveProperty ;
+    owl:inverseOf :hasSubstitute ;
+    rdfs:domain :Edible ;
+    rdfs:range :Edible .
 
 
 #################################################################
