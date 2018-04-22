@@ -14,37 +14,15 @@
 #################################################################
 
 
-:hasIngredient a owl:ObjectProperty ;
-               owl:inverseOf :usedToMake ;
-               rdfs:domain :Food ;
-               rdfs:range :Food .
+:hasIngredient a owl:ObjectProperty .
 
 
 :hasSubstitute a owl:ObjectProperty ,
                  owl:SymmetricProperty ,
                  owl:TransitiveProperty ;
                owl:inverseOf :hasSubstitute ;
-               rdfs:domain :Food ;
-               rdfs:range :Food .
-
-
-#################################################################
-#    Base classes
-#################################################################
-
-
-:Food a owl:Class .
-
-
-:Dessert a owl:Class ;
-         rdfs:subClassOf :Food ,
-                         [ a owl:Restriction ;
-                           owl:onProperty :hasIngredient ;
-                           owl:someValuesFrom :Food
-                         ] .
-
-
-:NamedDessert rdfs:subClassOf :Dessert .
+               rdfs:domain :Edible ;
+               rdfs:range :Edible .
 
 
 #################################################################
@@ -52,82 +30,94 @@
 #################################################################
 
 
-:AlcoholicFood owl:equivalentClass
+:Alcoholic owl:equivalentClass
     [ owl:intersectionOf
-        ( :Food
+        ( :Edible
           [ a owl:Restriction ;
             owl:onProperty :hasIngredient ;
-            owl:someValuesFrom :AlcoholicFood
-           ]
-        )
-    ] .
-
-
-:NonAlcoholicFood a owl:Class ; owl:equivalentClass
-    [ owl:intersectionOf ( :Food [ owl:complementOf :AlcoholicFood ] ) ] .
-
-
-:LactoseFreeFood owl:equivalentClass
-    [ owl:intersectionOf
-        ( :Food [ a owl:Restriction ;
-                  owl:onProperty :hasIngredient ;
-                  owl:allValuesFrom :LactoseFreeFood ] ) ] .
-
-
-:NonLactoseFreeFood a owl:Class ;
-                       owl:equivalentClass [ owl:intersectionOf ( :Food
-                                                                  [ a owl:Class ;
-                                                                    owl:complementOf :LactoseFreeFood
-                                                                  ]
-                                                                ) ;
-                                             a owl:Class
-                                           ] .
-
-
-:GlutenFree a owl:Class ;
-                   owl:equivalentClass [ owl:intersectionOf ( :Food
-                                                              [ a owl:Restriction ;
-                                                                owl:onProperty :hasIngredient ;
-                                                                owl:allValuesFrom :GlutenFree
-                                                              ]
-                                                            )
-                                       ] .
-
-
-:NonGlutenFree a owl:Class ;
-                      owl:equivalentClass [ owl:intersectionOf ( :Food
-                                                                 [ a owl:Class ;
-                                                                   owl:complementOf :GlutenFree
-                                                                 ]
-                                                               ) ;
-                                            a owl:Class
-                                          ] .
-
-
-:HasVeganEquivalent owl:equivalentClass
-    [ owl:intersectionOf
-        ( :Food
-          [ a owl:Restriction ;
-            owl:onProperty :hasIngredient ;
-            owl:allValuesFrom [ owl:unionOf ( :HasPlantSubstitute
-                                              :VeganFood
-                                              :HasVeganEquivalent
-                                            )
-                              ]
+            owl:someValuesFrom :Alcoholic
           ]
         )
     ] .
+
+
+:NonAlcoholic a owl:Class ; owl:equivalentClass
+    [ owl:intersectionOf ( :Edible [ owl:complementOf :Alcoholic ] ) ] .
+
+
+:LactoseFree a owl:Class ; owl:equivalentClass
+    [ owl:intersectionOf
+        ( :Edible [ a owl:Restriction ;
+                    owl:onProperty :hasIngredient ;
+                    owl:allValuesFrom :LactoseFree ] ) ] .
+
+
+:NonLactoseFree
+    a owl:Class ;
+    owl:equivalentClass
+        [ owl:intersectionOf
+            ( :Edible [ a owl:Class ; owl:complementOf :LactoseFree ] ) ] .
+
+
+:GlutenFree a owl:Class ;
+    owl:equivalentClass
+        [ owl:intersectionOf
+            ( :Edible
+              [ a owl:Restriction ;
+                owl:onProperty :hasIngredient ;
+                owl:allValuesFrom :GlutenFree
+              ]
+            )
+        ] .
+
+
+:IceCreamDessert a owl:Class ;
+    owl:equivalentClass
+        [ owl:intersectionOf
+            ( :Edible
+              [ a owl:Restriction ;
+                owl:onProperty :hasIngredient ;
+                owl:someValuesFrom :IceCream
+              ]
+            )
+        ] .
+
+
+:NonGlutenFree
+    a owl:Class ;
+    owl:equivalentClass
+        [ owl:intersectionOf
+            ( :Edible [ owl:complementOf :GlutenFree ] ) ;
+            a owl:Class
+        ] .
+
+
+:HasVeganEquivalent
+    a owl:Class ;
+    owl:equivalentClass
+        [ owl:intersectionOf
+            ( :Edible
+              [ a owl:Restriction ;
+                owl:onProperty :hasIngredient ;
+                owl:allValuesFrom [ owl:unionOf ( :HasVeganSubstitute
+                                                  :Vegan
+                                                  :HasVeganEquivalent
+                                                )
+                                  ]
+              ]
+            )
+        ] .
 
 
 :HasLactoseFreeEquivalent
     a owl:Class ;
     owl:equivalentClass
         [ owl:intersectionOf
-            ( :Food
+            ( :Edible
               [ a owl:Restriction ;
                 owl:onProperty :hasIngredient ;
                 owl:allValuesFrom [ owl:unionOf ( :HasLactoseFreeSubstitute
-                                                  :LactoseFreeFood
+                                                  :LactoseFree
                                                   :HasLactoseFreeEquivalent
                                                 )
                                   ]
@@ -140,7 +130,7 @@
     a owl:Class ;
     owl:equivalentClass
         [ owl:intersectionOf
-            ( :Food
+            ( :Edible
               [ a owl:Restriction ;
                 owl:onProperty :hasIngredient ;
                 owl:allValuesFrom [ owl:unionOf ( :HasGlutenFreeSubstitute
@@ -153,24 +143,25 @@
         ] .
 
 
-:VeganFood owl:equivalentClass [ owl:intersectionOf ( :HasVeganEquivalent
-                                                         [ a owl:Class ;
-                                                           owl:complementOf [ a owl:Restriction ;
-                                                                              owl:onProperty :hasIngredient ;
-                                                                              owl:someValuesFrom [ owl:unionOf (
-                                                                                                                 :NonVeganFood
-                                                                                                               )
-                                                                                                 ]
-                                                                            ]
-                                                         ]
-                                                       )
-                                  ] .
-
-
-:NonVeganFood
+:Vegan
     a owl:Class ;
     owl:equivalentClass
-        [ owl:intersectionOf ( :Food [ owl:complementOf :VeganFood ] ) ] .
+        [ owl:intersectionOf
+          ( :Edible
+            [ a owl:Class ;
+              owl:complementOf [ a owl:Restriction ;
+                                 owl:onProperty :hasIngredient ;
+                                 owl:someValuesFrom :NonVegan
+                               ]
+            ]
+          )
+        ] .
+
+
+:NonVegan
+    a owl:Class ;
+    owl:equivalentClass
+        [ owl:intersectionOf ( :Edible [ owl:complementOf :Vegan ] ) ] .
 
 
 :HasSubstitute
@@ -182,12 +173,12 @@
         ] .
 
 
-:HasPlantSubstitute
+:HasVeganSubstitute
     a owl:Class ;
     owl:equivalentClass
         [ a owl:Restriction ;
           owl:onProperty :hasSubstitute ;
-          owl:someValuesFrom :VeganFood
+          owl:someValuesFrom :Vegan
         ] ;
     rdfs:subClassOf :HasSubstitute .
 
@@ -197,7 +188,7 @@
     owl:equivalentClass
         [ a owl:Restriction ;
           owl:onProperty :hasSubstitute ;
-          owl:someValuesFrom :LactoseFreeFood
+          owl:someValuesFrom :LactoseFree
         ] ;
     rdfs:subClassOf :HasSubstitute .
 
@@ -214,47 +205,134 @@
 
 #################################################################
 #    Food groups
-#################################################################
+#################################################################.
+
+
+:Edible a owl:Class .
+
+
+:Food rdfs:subClassOf :Edible .
+
+
+:Organic rdfs:subClassOf :Edible .
+
+
+:NonOrganic rdfs:subClassOf :Edible ;
+    owl:disjointWith :Organic .
+
+
+:BakingPowder rdfs:subClassOf :NonOrganic .
+
+
+:Water rdfs:subClassOf :NonOrganic .
+
+
+:Vinegar rdfs:subClassOf :NonOrganic .
 
 
 [ a owl:AllDisjointClasses ;
-  owl:members ( :NonGlutenFree :Dairy :Egg :Sugar :Water :Honey :Yeast :Alcohol :Lard
-                               :Algae :Herb :Bean :Collagen :Fruit :Nut :Spice
-                               :Vinegar :Rye :Vegetable :BakingPowder ) ] .
+  owl:members ( :BakingPowder :Water :Vinegar ) ] .
+
+
+:Dessert rdfs:subClassOf
+    :Food ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Food
+    ] .
+
+
+:NamedDessert rdfs:subClassOf :Dessert .
+
+
+:OfPlantOrigin rdfs:subClassOf :Organic .
+
+
+:OfAnimalOrigin rdfs:subClassOf :Organic , :GlutenFree .
+
+
+:Alcohol rdfs:subClassOf :OfPlantOrigin , :Alcoholic .
+
+
+# All organic and non-organic things except dairy are lactose-free.
+[ owl:intersectionOf ( [ owl:unionOf ( :Organic :NonOrganic ) ]
+                       [ owl:complementOf :Dairy ] ) ] rdfs:subClassOf :LactoseFree .
+
+
+:Dairy owl:disjointWith :LactoseFree.
+
+
+# All organic and non-organic things except wheat are gluten-free.
+[ owl:intersectionOf ( [ owl:unionOf ( :Organic :NonOrganic ) ]
+                       [ owl:complementOf [ owl:unionOf ( :Rye :Wheat :Alcohol ) ] ] ) ] rdfs:subClassOf :GlutenFree .
+
+
+:Wheat owl:disjointWith :GlutenFree .
+
+
+:Rye owl:disjointWith :GlutenFree .
+
+
+# All organic and non-organic things except those of animal origin are vegan.
+[ owl:intersectionOf ( [ owl:unionOf ( :Organic :NonOrganic ) ]
+                       [ owl:complementOf :OfAnimalOrigin ] ) ] rdfs:subClassOf :Vegan .
+
+
+:OfAnimalOrigin owl:disjointWith :Vegan .
+
+
+# All organic and non-organic things except alcohol are not alcoholic.
+[ owl:intersectionOf ( [ owl:unionOf ( :Organic :NonOrganic ) ]
+                       [ owl:complementOf :Alcohol ] ) ] rdfs:subClassOf :NonAlcoholic .
+
 
 [ a owl:AllDisjointClasses ;
-  owl:members ( :Alcohol :BakingPowder :Dairy :Egg :Plant :Sugar :Water
-                               :Vinegar :Collagen :Lard :Honey :Yeast ) ] .
-
-[ a owl:AllDisjointClasses ;
-  owl:members ( :AlcoholicFood :BakingPowder :Dairy :Egg :Plant :Sugar :Water
-                               :Vinegar :Collagen :Lard :Honey :Yeast ) ] .
+  owl:members ( :OfPlantOrigin :OfAnimalOrigin ) ] .
 
 
 [ a owl:AllDisjointClasses ;
-  owl:members ( :NonLactoseFreeFood :BakingPowder :Alcohol :Egg :Plant :Lard
-                :Vinegar :Collagen :Sugar :Water :Honey :Yeast ) ] .
+  owl:members ( :Organic :NonOrganic ) ] .
 
 
-:Plant rdfs:subClassOf :VeganFood .
+[ a owl:AllDisjointClasses ;
+  owl:members ( :Alcohol :Honey :Plant :Sugar :Yeast ) ] .
+
+
+[ a owl:AllDisjointClasses ;
+  owl:members ( :Dairy :Egg :Lard :Collagen ) ] .
+
+
+[ a owl:AllDisjointClasses ;
+  owl:members ( :Algae :Bean :Fruit :Herb :Nut :Seed :Spice :Vegetable ) ] .
+
+
+[ a owl:AllDisjointClasses ;
+  owl:members ( :Rice :Grain ) ] .
+
+
+[ a owl:AllDisjointClasses ;
+  owl:members ( :Rye :Wheat ) ] .
+
+
+:Plant rdfs:subClassOf :OfPlantOrigin .
 
 
 :Herb rdfs:subClassOf :Plant .
 
 
-:Seed rdfs:subClassOf :Plant .
+:Seed rdfs:subClassOf :Plant , :Food .
 
 
-:Spice rdfs:subClassOf :Plant .
+:Spice rdfs:subClassOf :Plant , :Food .
 
 
-:Sugar rdfs:subClassOf :VeganFood .
+:Sugar rdfs:subClassOf :OfPlantOrigin , :Food .
 
 
-:Honey rdfs:subClassOf :VeganFood .
+:Honey rdfs:subClassOf :OfPlantOrigin , :Food .
 
 
-:Grain rdfs:subClassOf :Seed .
+:Grain rdfs:subClassOf :Seed , :Food .
 
 
 :Wheat rdfs:subClassOf :NonGlutenFree , :Grain .
@@ -263,22 +341,16 @@
 :Rye rdfs:subClassOf :Grain .
 
 
-:Nut rdfs:subClassOf :Plant .
+:Nut rdfs:subClassOf :Plant , :Food .
 
 
-:Alcohol rdfs:subClassOf :VeganFood , :AlcoholicFood .
+:Dairy rdfs:subClassOf :OfAnimalOrigin , :Food .
 
 
-:Dairy rdfs:subClassOf :NonVeganFood , :NonLactoseFreeFood .
+:Fruit rdfs:subClassOf :Plant , :Food .
 
 
-:Egg rdfs:subClassOf :NonVeganFood .
-
-
-:Fruit rdfs:subClassOf :Plant .
-
-
-:Bean rdfs:subClassOf :Plant .
+:Bean rdfs:subClassOf :Plant , :Food .
 
 
 :Rice rdfs:subClassOf :Seed .
@@ -290,28 +362,28 @@
 :Wine rdfs:subClassOf :Alcohol , :GlutenFree .
 
 
-:Yeast rdfs:subClassOf :VeganFood .
+:Liqueur rdfs:subClassOf :Alcohol , :GlutenFree .
 
 
-:Vegetable rdfs:subClassOf :Plant .
+:Rum rdfs:subClassOf :Alcohol, :GlutenFree .
 
 
-:BakingPowder rdfs:subClassOf :VeganFood .
+:Yeast rdfs:subClassOf :OfPlantOrigin .
 
 
-:Water rdfs:subClassOf :VeganFood .
+:Vegetable rdfs:subClassOf :Plant , :Food .
 
 
-:Lard rdfs:subClassOf :NonVeganFood .
+:Egg rdfs:subClassOf :OfAnimalOrigin , :Food .
 
 
-:Collagen rdfs:subClassOf :NonVeganFood .
+:Lard rdfs:subClassOf :OfAnimalOrigin .
+
+
+:Collagen rdfs:subClassOf :OfAnimalOrigin .
 
 
 :Algae rdfs:subClassOf :Plant .
-
-
-:Vinegar rdfs:subClassOf :VeganFood .
 
 
 #################################################################
@@ -358,7 +430,7 @@
 :BeetrootJuice rdfs:subClassOf :Vegetable .
 
 
-:Bread rdfs:subClassOf
+:Bread rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :Flour
@@ -382,7 +454,7 @@
 :BrownSugar rdfs:subClassOf :Sugar .
 
 
-:Butter rdfs:subClassOf
+:Butter rdfs:subClassOf :Food ,
     :CowMilk ,
     [ a owl:Restriction ;
       owl:onProperty :hasSubstitute ;
@@ -390,7 +462,7 @@
     ] .
 
 
-:ButterCream rdfs:subClassOf
+:ButterCream rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :Butter
@@ -420,7 +492,7 @@
 :Cherry rdfs:subClassOf :Fruit .
 
 
-:CherryLiqueur rdfs:subClassOf :Alcohol, :GlutenFree .
+:CherryLiqueur rdfs:subClassOf :Liqueur .
 
 
 :Chocolate rdfs:subClassOf :CocoaPowder .
@@ -438,7 +510,7 @@
 :ChocolateCookieCrumb rdfs:subClassOf :Chocolate .
 
 
-:Custard rdfs:subClassOf
+:Custard rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :CowMilk
@@ -453,10 +525,7 @@
     ] .
 
 
-:Liqueur rdfs:subClassOf :Alcohol , :GlutenFree .
-
-
-:ChocolateSauce rdfs:subClassOf
+:ChocolateSauce rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :Sugar
@@ -471,7 +540,7 @@
     ] .
 
 
-:ChocolateGanache rdfs:subClassOf
+:ChocolateGanache rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :Cream
@@ -486,7 +555,7 @@
     ] .
 
 
-:ChocolateFondant rdfs:subClassOf
+:ChocolateFondant rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :Egg
@@ -524,7 +593,7 @@
 :PuffPastry rdfs:subClassOf :Pastry .
 
 
-:Pastry rdfs:subClassOf
+:Pastry rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :Egg
@@ -585,7 +654,7 @@
 :CornFlakes rdfs:subClassOf :Corn .
 
 
-:RiceKrispy rdfs:subClassOf
+:RiceKrispy rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :Rice
@@ -618,7 +687,7 @@
 :CocoaPowder rdfs:subClassOf :Cocoa .
 
 
-:Cream rdfs:subClassOf
+:Cream rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :Egg
@@ -633,7 +702,7 @@
     ] .
 
 
-:Marshmallow rdfs:subClassOf
+:Marshmallow rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :Sugar
@@ -661,7 +730,7 @@
 :Molasses rdfs:subClassOf :Sugar .
 
 
-:Nutella rdfs:subClassOf
+:Nutella rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :Chocolate
@@ -679,7 +748,7 @@
 :PandanLeaf rdfs:subClassOf :Plant , :GlutenFree .
 
 
-:Sponge rdfs:subClassOf
+:Sponge rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :Flour
@@ -707,7 +776,7 @@
 :Sultana rdfs:subClassOf :Fruit .
 
 
-:Meringue rdfs:subClassOf
+:Meringue rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :EggWhite
@@ -722,7 +791,7 @@
     ] .
 
 
-:CreamCheese rdfs:subClassOf
+:CreamCheese rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :CowMilk
@@ -743,7 +812,7 @@
 :Gelatin rdfs:subClassOf :Collagen ,
     [ a owl:Restriction ;
       owl:onProperty :hasSubstitute ;
-      owl:someValuesFrom [ owl:unionOf ( :Agar ) ]
+      owl:someValuesFrom :Agar
     ] .
 
 
@@ -839,7 +908,7 @@
 :HotTea rdfs:subClassOf :Herb .
 
 
-:IceCream rdfs:subClassOf [ a owl:Restriction ;
+:IceCream rdfs:subClassOf :Food , [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :CowMilk
     ] ,
@@ -853,7 +922,7 @@
     ] .
 
 
-:VanillaIceCream rdfs:subClassOf
+:VanillaIceCream rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :IceCream
@@ -874,7 +943,7 @@
 :IcingSugar rdfs:subClassOf :Sugar .
 
 
-:Jam rdfs:subClassOf
+:Jam rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :Fruit
@@ -904,7 +973,7 @@
 :Margarine rdfs:subClassOf :Plant , :GlutenFree .
 
 
-:Saltine rdfs:subClassOf
+:Saltine rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :Yeast
@@ -919,7 +988,7 @@
     ] .
 
 
-:Marzipan rdfs:subClassOf
+:Marzipan rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :Almond
@@ -979,9 +1048,6 @@
 :RicottaCheese rdfs:subClassOf :Cheese .
 
 
-:Rum rdfs:subClassOf :Alcohol, :GlutenFree .
-
-
 :SliceOfBread rdfs:subClassOf :Flour .
 
 
@@ -991,7 +1057,7 @@
 :SesameSeed rdfs:subClassOf :Seed, :GlutenFree .
 
 
-:Strawberry rdfs:subClassOf :Seed, :Fruit .
+:Strawberry rdfs:subClassOf :Fruit .
 
 
 :ShreddedCoconut rdfs:subClassOf :Coconut .
@@ -1000,7 +1066,7 @@
 :ShreddedCarrot rdfs:subClassOf :Carrot .
 
 
-:Toffee rdfs:subClassOf
+:Toffee rdfs:subClassOf :Food ,
     [ a owl:Restriction ;
       owl:onProperty :hasIngredient ;
       owl:someValuesFrom :Sugar
@@ -1041,9 +1107,36 @@
 
 
 #################################################################
-#    Desserts
+#    Properties
 #################################################################
 
+
+:AlmondTart rdfs:subClassOf
+    :NamedDessert ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Almond
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Egg
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :CowMilk
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Sugar
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Flour
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Almond :Egg :CowMilk :Sugar :Flour ) ]
+    ] .
 
 
 :AlmondTart rdfs:subClassOf
