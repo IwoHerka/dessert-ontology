@@ -297,11 +297,11 @@
 
 
 [ a owl:AllDisjointClasses ;
-  owl:members ( :Alcohol :Honey :Plant :Sugar :Yeast ) ] .
+  owl:members ( :Alcohol :Plant :Sugar :Yeast ) ] .
 
 
 [ a owl:AllDisjointClasses ;
-  owl:members ( :Dairy :Egg :Lard :Collagen ) ] .
+  owl:members ( :Honey :Dairy :Egg :Lard :Collagen ) ] .
 
 
 [ a owl:AllDisjointClasses ;
@@ -331,7 +331,7 @@
 :Sugar rdfs:subClassOf :OfPlantOrigin , :Food .
 
 
-:Honey rdfs:subClassOf :OfPlantOrigin , :Food .
+:Honey rdfs:subClassOf :OfAnimalOrigin , :Food .
 
 
 :Grain rdfs:subClassOf :Seed , :Food .
@@ -420,7 +420,7 @@
 :BananaFlour rdfs:subClassOf :Banana .
 
 
-:BiscuitCrumb rdfs:subClassOf :Flour .
+:BiscuitCrumb rdfs:subClassOf :Biscuit .
 
 
 :Blueberry rdfs:subClassOf :Fruit .
@@ -446,6 +446,20 @@
       owl:allValuesFrom [ owl:unionOf ( :Flour :Yeast ) ]
     ] .
 
+
+:Biscuit rdfs:subClassOf :Food ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Flour
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Sugar
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Flour :Sugar ) ]
+    ] .
 
 :BreadCrumb rdfs:subClassOf :Bread .
 
@@ -677,7 +691,7 @@
 :CornFlour rdfs:subClassOf :Corn .
 
 
-:Crumb rdfs:subClassOf :Flour .
+:Crumb rdfs:subClassOf :Bread .
 
 
 :Cocoa rdfs:subClassOf :Bean .
@@ -939,8 +953,19 @@
     ] .
 
 
-:Wafer rdfs:subClassOf :Flour .
-
+:Wafer rdfs:subClassOf :Food ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Flour
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:someValuesFrom :Sugar
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasIngredient ;
+      owl:allValuesFrom [ owl:unionOf ( :Flour :Sugar ) ]
+    ] .
 
 :IcingSugar rdfs:subClassOf :Sugar .
 
@@ -1005,7 +1030,7 @@
     ] .
 
 
-:Orange rdfs:subClassOf :Fruit .
+:Orange rdfs:subClassOf :Citrus .
 
 
 :OrangeZest rdfs:subClassOf :Orange .
@@ -1050,7 +1075,7 @@
 :RicottaCheese rdfs:subClassOf :Cheese .
 
 
-:SliceOfBread rdfs:subClassOf :Flour .
+:SliceOfBread rdfs:subClassOf :Bread .
 
 
 :SoyMilk rdfs:subClassOf :Soy .
